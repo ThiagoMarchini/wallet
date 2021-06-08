@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import action from '../actions';
 
 class Form extends React.Component {
@@ -32,25 +32,36 @@ class Form extends React.Component {
   }
 
   render() {
+    const { moeda, pagamento, tag } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="valor">
           Valor
-          <input id="valor" name="valor" type="number" />
+          <input onChange={ this.handleChange } id="valor" name="valor" type="number" />
         </label>
         <label htmlFor="descrição">
           Descrição
-          <input id="descrição" name="descrição" type="text" />
+          <input
+            onChange={ this.handleChange }
+            id="descrição"
+            name="descrição"
+            type="text"
+          />
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda" name="moeda">
+          <select id="moeda" name="moeda" value={ moeda } onChange={ this.handleChange }>
             <option value="TESTE">TESTE</option>
           </select>
         </label>
         <label htmlFor="pagamento">
           Método de pagamento
-          <select id="pagamento" name="pagamento">
+          <select
+            id="pagamento"
+            name="pagamento"
+            value={ pagamento }
+            onChange={ this.handleChange }
+          >
             <option value="dinheiro">Dinheiro</option>
             <option value="credito">Cartão de crédito</option>
             <option value="debito">Cartão de débito</option>
@@ -58,7 +69,7 @@ class Form extends React.Component {
         </label>
         <label htmlFor="tag">
           Tag
-          <select id="tag" name="tag">
+          <select id="tag" name="tag" value={ tag } onChange={ this.handleChange }>
             <option value="alimentação">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
@@ -76,9 +87,8 @@ const mapDispatchToProps = (dispatch) => ({
   myDispatch: (state) => dispatch(action(state)),
 });
 
-Form.propTypes = {
-  myDispatch: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//   myDispatch: PropTypes.func.isRequired,
+// };
 
 export default connect(null, mapDispatchToProps)(Form);
-// export default Form;
