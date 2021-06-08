@@ -8,8 +8,8 @@ class Login extends React.Component {
     this.validateEmail = this.validateEmail.bind(this);
 
     this.state = {
-      email: undefined,
-      password: undefined,
+      email: '',
+      password: '',
       isDisabled: true,
     };
   }
@@ -18,13 +18,10 @@ class Login extends React.Component {
     const { name, value } = target;
     const { email, password } = this.state;
     const minPasswordLength = 6;
-    if (((name === 'email') && (this.validateEmail(value)))
-    || ((name === 'password') && (value.length >= minPasswordLength))) {
-      this.setState({
-        [name]: value,
-      });
-    }
-    if (email && password) {
+    this.setState({
+      [name]: value,
+    });
+    if (this.validateEmail(email) && (password.length >= minPasswordLength)) {
       this.setState({
         isDisabled: false,
       });
