@@ -40,11 +40,10 @@ class Login extends React.Component {
 
   saveLogin(e) {
     e.preventDefault();
-    console.log(this.props);
     const { myDispatch } = this.props;
     const { email, password } = this.state;
     if (email && password) {
-      myDispatch({ type: 'LOGIN', payload: { email } });
+      myDispatch({ type: 'LOGIN', payload: email });
       this.setState({ redirect: true });
     }
   }

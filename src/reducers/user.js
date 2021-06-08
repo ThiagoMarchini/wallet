@@ -1,8 +1,6 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function user(state = INITIAL_STATE, action) {
@@ -10,10 +8,7 @@ function user(state = INITIAL_STATE, action) {
   case 'LOGIN':
     console.log(action);
     return {
-      ...state,
-      user: {
-        email: action.payload.email,
-      },
+      email: action.payload,
     };
   default:
     return state;
