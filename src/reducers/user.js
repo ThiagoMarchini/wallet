@@ -3,19 +3,16 @@ const INITIAL_STATE = {
   user: {
     email: '',
   },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
 };
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'USER_LOGIN':
+  case 'LOGIN':
+    console.log(action);
     return {
       ...state,
       user: {
-        email: action.email,
+        email: action.payload.email,
       },
     };
   default:
