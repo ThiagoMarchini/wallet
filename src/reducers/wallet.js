@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'USER_LOGIN':
-    return state;
+    return { ...state };
   default:
     return state;
   }

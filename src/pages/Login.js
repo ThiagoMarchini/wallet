@@ -17,13 +17,17 @@ class Login extends React.Component {
   handleChange({ target }) {
     const { name, value } = target;
     const { email, password } = this.state;
-    const minPasswordLength = 6;
+    const minPasswordLength = 5;
     this.setState({
       [name]: value,
     });
     if (this.validateEmail(email) && (password.length >= minPasswordLength)) {
       this.setState({
         isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
       });
     }
   }
@@ -37,7 +41,6 @@ class Login extends React.Component {
 
   render() {
     const { isDisabled } = this.state;
-    console.log(this.state);
     return (
       <form>
         <label htmlFor="email">
