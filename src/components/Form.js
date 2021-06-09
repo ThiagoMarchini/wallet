@@ -10,9 +10,6 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    const { myDispatchToFetch } = this.props;
-    myDispatchToFetch();
-
     this.state = {
       valor: undefined,
       descricao: undefined,
@@ -20,6 +17,11 @@ class Form extends React.Component {
       'método de pagamento': undefined,
       tag: undefined,
     };
+  }
+
+  componentDidMount() {
+    const { myDispatchToFetch } = this.props;
+    myDispatchToFetch();
   }
 
   handleChange({ target }) {
