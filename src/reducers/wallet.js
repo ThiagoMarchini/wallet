@@ -7,12 +7,17 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case 'ADD_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   case 'GET_CURRENCY':
     return {
       ...state,
       currencies: [
         Object.keys(action.payload).filter((entry) => entry !== 'USDT'),
-        Object.entries(action.payload).map((entry) => entry),
+        action.payload,
       ],
     };
   case 'FAILED_REQUEST':

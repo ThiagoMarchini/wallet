@@ -14,18 +14,13 @@ class Form extends React.Component {
     myDispatchToFetch();
 
     this.state = {
-      valor: '',
-      descricao: '',
-      moeda: '',
-      pagamento: '',
-      tag: '',
+      valor: undefined,
+      descricao: undefined,
+      moeda: undefined,
+      'método de pagamento': undefined,
+      tag: undefined,
     };
   }
-
-  // componentDidMount() {
-  //   const { myDispatchToFetch } = this.props;
-  //   myDispatchToFetch();
-  // }
 
   handleChange({ target }) {
     const { name, value } = target;
@@ -37,10 +32,27 @@ class Form extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.state);
+    const { entradas, cotacoes, myDispatch, myDispatchToFetch } = this.props;
+    myDispatchToFetch();
+    const { valor, descricao, 'método de pagamento': pagamento, moeda, tag } = this.state;
+    if (valor && descricao && pagamento && moeda && tag) {
+      myDispatch({
+        type: 'ADD_EXPENSE',
+        payload: {
+          id: entradas.length,
+          value: valor,
+          currency: moeda,
+          method: pagamento,
+          tag,
+          description: descricao,
+          exchangeRates: cotacoes,
+        },
+      });
+    }
   }
 
   render() {
-    const { moeda, pagamento, tag } = this.state;
+    const { moeda, 'método de pagamento': pagamento, tag } = this.state;
     const { moedas } = this.props;
     return (
       <form>
@@ -55,28 +67,29 @@ class Form extends React.Component {
         <label htmlFor="moeda">
           Moeda
           <select id="moeda" name="moeda" value={ moeda } onChange={ this.handleChange }>
+            {/* <option default>Selecione</option> */}
             { Array.isArray(moedas) ? (moedas.map((entry) => (
-              <option key={ entry } value={ entry }>
-                { entry }
-              </option>))) : '' }
+              <option key={ entry } value={ entry }>{ entry }</option>))) : '' }
           </select>
         </label>
-        <label htmlFor="pagamento">
+        <label htmlFor="método de pagamento">
           Método de pagamento
           <select
-            id="pagamento"
-            name="pagamento"
+            id="método de pagamento"
+            name="método de pagamento"
             value={ pagamento }
             onChange={ this.handleChange }
           >
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            {/* <option default>Selecione</option> */}
+            <option key="dinheiro" value="dinheiro">Dinheiro</option>
+            <option key="credito" value="credito">Cartão de crédito</option>
+            <option key="debito" value="debito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag
           <select id="tag" name="tag" value={ tag } onChange={ this.handleChange }>
+            {/* <option default>Selecione</option> */}
             <option value="alimentação">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
@@ -98,16 +111,21 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   moedas: state.wallet.currencies[0],
   cotacoes: state.wallet.currencies[1],
+  entradas: state.wallet.expenses,
 });
 
 Form.propTypes = {
+  cotacoes: PropTypes.objectOf(PropTypes.any),
+  entradas: PropTypes.arrayOf(PropTypes.any),
   moedas: PropTypes.arrayOf(PropTypes.any),
-  // myDispatch: PropTypes.func.isRequired,
+  myDispatch: PropTypes.func.isRequired,
   myDispatchToFetch: PropTypes.func.isRequired,
 };
 
 Form.defaultProps = {
+  cotacoes: [],
   moedas: [],
+  entradas: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
