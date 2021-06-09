@@ -10,19 +10,22 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    const { myDispatchToFetch } = this.props;
+    myDispatchToFetch();
+
     this.state = {
       valor: '',
-      descrição: '',
+      descricao: '',
       moeda: '',
       pagamento: '',
       tag: '',
     };
   }
 
-  componentDidMount() {
-    const { myDispatchToFetch } = this.props;
-    myDispatchToFetch();
-  }
+  // componentDidMount() {
+  //   const { myDispatchToFetch } = this.props;
+  //   myDispatchToFetch();
+  // }
 
   handleChange({ target }) {
     const { name, value } = target;
@@ -45,20 +48,17 @@ class Form extends React.Component {
           Valor
           <input onChange={ this.handleChange } id="valor" name="valor" type="number" />
         </label>
-        <label htmlFor="descrição">
+        <label htmlFor="descricao">
           Descrição
-          <input
-            onChange={ this.handleChange }
-            id="descrição"
-            name="descrição"
-            type="text"
-          />
+          <textarea name="descricao" id="descricao" onChange={ this.handleChange } />
         </label>
         <label htmlFor="moeda">
           Moeda
           <select id="moeda" name="moeda" value={ moeda } onChange={ this.handleChange }>
-            { moedas ? moedas.map((entry) => (
-              <option key={ entry } value={ entry }>{entry}</option>)) : ''}
+            { Array.isArray(moedas) ? (moedas.map((entry) => (
+              <option key={ entry } value={ entry }>
+                { entry }
+              </option>))) : '' }
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -101,8 +101,13 @@ const mapStateToProps = (state) => ({
 });
 
 Form.propTypes = {
+  moedas: PropTypes.arrayOf(PropTypes.any),
   // myDispatch: PropTypes.func.isRequired,
   myDispatchToFetch: PropTypes.func.isRequired,
+};
+
+Form.defaultProps = {
+  moedas: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
