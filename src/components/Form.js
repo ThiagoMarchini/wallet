@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-import action from '../actions';
+import PropTypes from 'prop-types';
+import { action, fetchData } from '../actions';
 
 class Form extends React.Component {
   constructor(props) {
@@ -19,6 +19,11 @@ class Form extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { myDispatchToFetch } = this.props;
+    myDispatchToFetch();
+  }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -33,8 +38,9 @@ class Form extends React.Component {
 
   render() {
     const { moeda, pagamento, tag } = this.state;
+    const { moedas } = this.props;
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form>
         <label htmlFor="valor">
           Valor
           <input onChange={ this.handleChange } id="valor" name="valor" type="number" />
@@ -51,7 +57,8 @@ class Form extends React.Component {
         <label htmlFor="moeda">
           Moeda
           <select id="moeda" name="moeda" value={ moeda } onChange={ this.handleChange }>
-            <option value="TESTE">TESTE</option>
+            { moedas ? moedas.map((entry) => (
+              <option key={ entry } value={ entry }>{entry}</option>)) : ''}
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -77,7 +84,7 @@ class Form extends React.Component {
             <option value="saúde">Saúde</option>
           </select>
         </label>
-        <input type="submit" value="Enviar" />
+        <button type="button" onClick={ this.handleSubmit }>Adicionar Despesa</button>
       </form>
     );
   }
@@ -85,10 +92,17 @@ class Form extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   myDispatch: (state) => dispatch(action(state)),
+  myDispatchToFetch: () => dispatch(fetchData()),
 });
 
-// Form.propTypes = {
-//   myDispatch: PropTypes.func.isRequired,
-// };
+const mapStateToProps = (state) => ({
+  moedas: state.wallet.currencies[0],
+  cotacoes: state.wallet.currencies[1],
+});
 
-export default connect(null, mapDispatchToProps)(Form);
+Form.propTypes = {
+  // myDispatch: PropTypes.func.isRequired,
+  myDispatchToFetch: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
