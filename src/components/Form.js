@@ -37,11 +37,15 @@ class Form extends React.Component {
     const { entradas, cotacoes, myDispatch, myDispatchToFetch } = this.props;
     myDispatchToFetch();
     const { valor, descricao, 'método de pagamento': pagamento, moeda, tag } = this.state;
+    let newId = 0;
+    if (entradas.length > 0) {
+      newId = (entradas[entradas.length - 1].id) + 1;
+    }
     if (valor && descricao && pagamento && moeda && tag) {
       myDispatch({
         type: 'ADD_EXPENSE',
         payload: {
-          id: entradas.length,
+          id: newId,
           value: valor,
           currency: moeda,
           method: pagamento,

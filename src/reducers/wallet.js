@@ -12,6 +12,13 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+  case 'REMOVE_EXPENSE':
+    console.log(action.payload);
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((entry) => (
+        entry.id !== parseInt(action.payload, 10)))],
+    };
   case 'GET_CURRENCY':
     return {
       ...state,
