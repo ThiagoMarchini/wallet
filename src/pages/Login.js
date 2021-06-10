@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { action } from '../actions';
 import './Login.css';
 
+const TrybeWallet = require('./images/trybewallet.png');
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -64,8 +66,8 @@ class Login extends React.Component {
     const { isDisabled } = this.state;
     return (
       <form className="login-form">
+        <img alt="timer" src={ TrybeWallet } />
         <h1>Trybe Wallet</h1>
-        <img src="../images/trybewallet.png" alt="Logo Carteira da Trybe" />
         <label htmlFor="email">
           E-mail:
           <input
