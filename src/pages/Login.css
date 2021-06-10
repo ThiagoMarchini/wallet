@@ -1,0 +1,10 @@
+.login-form {
+  align-items: center;
+  background-color: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 50px;
+  width: fit-content;
+}

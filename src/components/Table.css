@@ -1,0 +1,23 @@
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+th {
+  background: darkgrey;
+  height: 30px;
+}
+
+td {
+  border-bottom: 1px solid darkgrey;
+  height: 30px;
+}
+
+tr:hover {
+  background-color: #cecece;
+}
+
+tr:nth-child( even ) {
+  background-color: #f2f2f2;
+}

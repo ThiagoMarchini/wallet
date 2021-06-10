@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { action } from '../actions';
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -62,7 +63,8 @@ class Login extends React.Component {
     }
     const { isDisabled } = this.state;
     return (
-      <form>
+      <form className="login-form">
+        <h1>Trybe Wallet</h1>
         <label htmlFor="email">
           E-mail:
           <input

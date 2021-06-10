@@ -1,0 +1,21 @@
+form {
+  align-content: center;
+  align-items: center;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+label {
+  align-items: center;
+  display: flex;
+}
+
+input , textarea , select {
+  margin-left: 5px;
+  resize: none;
+}
