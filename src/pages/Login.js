@@ -65,6 +65,7 @@ class Login extends React.Component {
     return (
       <form className="login-form">
         <h1>Trybe Wallet</h1>
+        <img src="../images/trybewallet.png" alt="Logo Carteira da Trybe" />
         <label htmlFor="email">
           E-mail:
           <input
