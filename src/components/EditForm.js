@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { action, fetchData } from '../actions';
 
-class Form extends React.Component {
+class EditForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -133,4 +133,4 @@ Form.defaultProps = {
   entradas: [],
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

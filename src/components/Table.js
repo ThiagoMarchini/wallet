@@ -8,6 +8,7 @@ class Table extends React.Component {
     super(props);
 
     this.removeExpense = this.removeExpense.bind(this);
+    this.tableHeader = this.tableHeader.bind(this);
 
     this.state = {};
   }
@@ -22,53 +23,61 @@ class Table extends React.Component {
     });
   }
 
+  tableHeader() {
+    return (
+      <tr>
+        <th>Descrição</th>
+        <th>Tag</th>
+        <th>Método de pagamento</th>
+        <th>Valor</th>
+        <th>Moeda</th>
+        <th>Câmbio utilizado</th>
+        <th>Valor convertido</th>
+        <th>Moeda de conversão</th>
+        <th>Editar/Excluir</th>
+      </tr>
+    );
+  }
+
   render() {
     const { expenses } = this.props;
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
-        {expenses.map((entry, index) => (
-          <tr key={ index }>
-            <td>{entry.description}</td>
-            <td>{entry.tag}</td>
-            <td>{entry.method}</td>
-            <td>{entry.value}</td>
-            <td>{entry.exchangeRates[entry.currency].name.split('/')[0]}</td>
-            <td>{parseFloat(entry.exchangeRates[entry.currency].ask).toFixed(2)}</td>
-            <td>
-              {parseFloat(entry.value
-                * entry.exchangeRates[entry.currency].ask).toFixed(2)}
-            </td>
-            <td>Real</td>
-            <td>
-              <button
-                type="button"
-                data-testid="delete-btn"
-                value={ entry.id }
-                onClick={ this.removeExpense }
-              >
-                Excluir
-              </button>
-              <button
-                type="button"
-                data-testid="edit-btn"
-                value={ entry.id }
-              >
-                Editar
-              </button>
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {this.tableHeader()}
+          {expenses.map((entry, index) => (
+            <tr key={ index }>
+              <td>{entry.description}</td>
+              <td>{entry.tag}</td>
+              <td>{entry.method}</td>
+              <td>{entry.value}</td>
+              <td>{entry.exchangeRates[entry.currency].name.split('/')[0]}</td>
+              <td>{parseFloat(entry.exchangeRates[entry.currency].ask).toFixed(2)}</td>
+              <td>
+                {parseFloat(entry.value
+                  * entry.exchangeRates[entry.currency].ask).toFixed(2)}
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  value={ entry.id }
+                  onClick={ this.removeExpense }
+                >
+                  Excluir
+                </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  value={ entry.id }
+                >
+                  Editar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }

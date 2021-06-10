@@ -13,7 +13,6 @@ function wallet(state = INITIAL_STATE, action) {
       expenses: [...state.expenses, action.payload],
     };
   case 'REMOVE_EXPENSE':
-    console.log(action.payload);
     return {
       ...state,
       expenses: [...state.expenses.filter((entry) => (
