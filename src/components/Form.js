@@ -13,7 +13,7 @@ class Form extends React.Component {
     this.state = {
       valor: undefined,
       descricao: undefined,
-      moeda: undefined,
+      moeda: 'USD',
       'método de pagamento': undefined,
       tag: undefined,
     };
@@ -40,27 +40,25 @@ class Form extends React.Component {
     if (entradas.length > 0) {
       newId = (entradas[entradas.length - 1].id) + 1;
     }
-    if (valor && descricao && pagamento && moeda && tag) {
-      myDispatch({
-        type: 'ADD_EXPENSE',
-        payload: {
-          id: newId,
-          value: valor,
-          currency: moeda,
-          method: pagamento,
-          tag,
-          description: descricao,
-          exchangeRates: cotacoes,
-        },
-      });
-    }
+    myDispatch({
+      type: 'ADD_EXPENSE',
+      payload: {
+        id: newId,
+        value: valor,
+        currency: moeda,
+        method: pagamento,
+        tag,
+        description: descricao,
+        exchangeRates: cotacoes,
+      },
+    });
   }
 
   render() {
     const { moeda, 'método de pagamento': pagamento, tag } = this.state;
     const { moedas } = this.props;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         <label htmlFor="valor">
           Valor
           <input onChange={ this.handleChange } id="valor" name="valor" type="number" />
@@ -72,7 +70,6 @@ class Form extends React.Component {
         <label htmlFor="moeda">
           Moeda
           <select id="moeda" name="moeda" value={ moeda } onChange={ this.handleChange }>
-            {/* <option default>Selecione</option> */}
             { Array.isArray(moedas) ? (moedas.map((entry) => (
               <option key={ entry } value={ entry }>{ entry }</option>))) : '' }
           </select>
@@ -85,24 +82,24 @@ class Form extends React.Component {
             value={ pagamento }
             onChange={ this.handleChange }
           >
-            {/* <option default>Selecione</option> */}
-            <option key="dinheiro" value="dinheiro">Dinheiro</option>
-            <option key="credito" value="credito">Cartão de crédito</option>
-            <option key="debito" value="debito">Cartão de débito</option>
+            <option hiddden="true">-</option>
+            <option key="dinheiro" value="Dinheiro">Dinheiro</option>
+            <option key="credito" value="Cartão de crédito">Cartão de crédito</option>
+            <option key="debito" value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag
           <select id="tag" name="tag" value={ tag } onChange={ this.handleChange }>
-            {/* <option default>Selecione</option> */}
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saúde">Saúde</option>
+            <option hiddden="true">-</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ this.handleSubmit }>Adicionar Despesa</button>
+        <button type="submit">Adicionar Despesa</button>
       </form>
     );
   }
